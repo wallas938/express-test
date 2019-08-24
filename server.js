@@ -7,25 +7,53 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.static('public'));
 
-app.use('/sorciere', (req, res, next) => {
-    console.log(req.baseUrl, ' pour /sorciere')
+app.use('/sorciere/:name', (req, res, next) => {
+    console.log(req.path, ' pour /sorciere/:name')
     next();
 })
 
-app.use('/sorciere/:name', (req, res, next) => {
-    console.log(req.baseUrl, ' pour /sorciere/:name')
+app.use('/sorciere', (req, res, next) => {
+    console.log(req.path, ' pour /sorciere')
     next();
 })
 
 app.use('/sorciere/:name/magic', (req, res, next) => {
-    console.log(req.baseUrl, ' pour /sorciere/:name/magic')
+    console.log(req.path, ' pour /sorciere/:name/magic')
     next();
 })
 
 app.use('/sorciere/:name/magic/:spell', (req, res, next) => {
+    console.log(req.path, ' pour /sorciere/:name/magic/:spell')
+    next();
+})
+
+/**
+ * app.use('/sorciere/:name/magic/:spell', (req, res, next) => {
     console.log(req.baseUrl, ' pour /sorciere/:name/magic/:spell')
     next();
 })
+
+app.use('/animal/:specie/location/:country', (req, res, next) => {
+    console.log(req.baseUrl, ' pour /animal/:specie/location/:country')
+    next();
+})
+
+app.use('/animal/:specie', (req, res, next) => {
+    console.log(req.baseUrl, ' pour /animal/:specie')
+    next();
+})
+
+app.use('/animal', (req, res, next) => {
+    console.log(req.baseUrl, ' pour /animal')
+    next();
+})
+
+
+app.use('/sorciere', (req, res, next) => {
+    console.log(req.baseUrl, ' pour /sorciere')
+    next();
+})
+ */
 
 app.get('/', (req, res, next) => {
     fs.readFile(path.join(__dirname, '/public', 'index.html'),
@@ -43,7 +71,6 @@ app.get('/sorciere', (req, res, next) => {
 })
 
 app.get('/sorciere/:name', (req, res, next) => {
-    console.log(req.params)
     res.status(200).send('Methode: ' + req.method + ' Parametres: '+ req.params.name + ' Chemin: ' + req.path );
 })
 
